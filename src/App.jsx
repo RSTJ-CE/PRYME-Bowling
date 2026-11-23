@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ACTIONS, CATEGORIES, CONSEQUENCES, PEOPLE } from './cards.js'
 
-const COOLDOWN = 0
+const COOLDOWN = 5
 
 function shuffle(n, avoidFirst) {
   const arr = Array.from({ length: n }, (_, i) => i)
