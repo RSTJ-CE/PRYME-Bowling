@@ -1,0 +1,87 @@
+export const CATEGORIES = {
+  know: { label: 'Get to know you', emoji: '🗣️', color: '#14b8a6' },
+  team: { label: 'Team interaction', emoji: '🤝', color: '#f59e0b' },
+  bowl: { label: 'Bowling challenge', emoji: '🎳', color: '#f43f5e' },
+}
+
+export const PEOPLE = [
+  'Person with the lowest total score',
+  'Person with the highest total score',
+  'Person with the lowest pin count in the previous round',
+  'Person with the highest pin count in their previous round',
+  'Person with the second-lowest pin count in the previous round',
+  'Person with the second-highest pin count in the previous round',
+  'Person who improved their score the most compared to the previous round',
+  'Person who scored the most strikes',
+  'Person who scored the most spares',
+  'Person who scored the most gutter balls',
+  'Person who had the lowest single-frame score in the previous round',
+  'Person who had the highest single-frame score in the previous round',
+  'Person who pressed the "Uncover Card" button appoints a person',
+  'Person who pressed the "Uncover Card" button',
+  'Person who has been selected the fewest times so far',
+  'The youngest person in the group',
+  'The oldest person in the group',
+  'The tallest person in the group',
+  'The shortest person in the group',
+]
+
+const a = (category, items) => items.map((text) => ({ category, text }))
+
+export const ACTIONS = [
+  ...a('know', [
+    'Share a hobby or interest that you do frequently.',
+    'Describe one interesting fact you learnt this month.',
+    "Tell us about a skill you'd like to learn and why.",
+    "Share one achievement you're particularly proud of.",
+    'Describe your ideal way to spend a free weekend.',
+    'Share about a place outside of home that you would be willing to stay in.',
+    'Share about a superpower you want the most.',
+    'Share something new you tried recently and enjoyed.',
+    'Describe a quality you value most in yourself.',
+    'Share a side quest that you are currently doing.',
+    'Share about your favourite object/item.',
+    'Share one small thing that brightens your day.',
+  ]),
+  ...a('team', [
+    'Ask a teammate what they usually enjoy doing in their free time.',
+    'Ask a teammate what superpower they would want the most.',
+    'Ask a teammate what kind of activities they enjoy on weekends.',
+    "Say each team member's name aloud.",
+    'Ask one teammate what type of food they could eat every day.',
+    'Ask one teammate about their favourite object/item.',
+    'Ask one teammate about something they are proud of.',
+    'Invite one teammate to share a skill they would enjoy teaching others.',
+    'Ask one teammate what they plan to do this month.',
+    'Ask one teammate about their favourite movie or show.',
+    'Share an interesting fact you found out about a teammate.',
+    "Ask one teammate what they hope to get out of today's activity.",
+  ]),
+  ...a('bowl', [
+    'Throw your next ball as softly as possible.',
+    'Throw your next ball as hard as possible.',
+    'Bowl your next turn using your non-dominant hand.',
+    'Try to knock down exactly [n] pins on your next throw.',
+    'Strike a pose immediately after releasing your ball.',
+    'Throw your next ball using both hands.',
+    'Roll your next ball between your legs using both hands.',
+    'Face away from the pins and roll the ball backwards between your legs.',
+    'Try to knock down only one corner pin.',
+    'Perform your entire approach, wind-up and release in extreme slow motion.',
+    'Try to knock down the same number of pins as the previous player.',
+    'Knock down at least one pin without hitting the gutter.',
+  ]),
+]
+
+export const CONSEQUENCES = [
+  'Give a motivational speech to the group before your next turn.',
+  'Act like your favourite superhero for 10 seconds.',
+  'Strike your most dramatic bowling pose.',
+  'Playfully blame the bowling ball for your miss.',
+  'Come up with the most creative excuse for why you failed.',
+  'Do the chicken dance for 10 seconds.',
+  'Do 10 jumping jacks, or a 10-second victory dance if you prefer.',
+  'Give your next throw a dramatic introduction.',
+  'Share one piece of bowling advice for your team (serious or silly).',
+  'Give a short "post-game interview" about your performance.',
+]
