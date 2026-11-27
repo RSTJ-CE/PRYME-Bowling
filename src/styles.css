@@ -213,6 +213,27 @@ body {
 }
 .btn:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; }
 
+/* iPhone Safari fix: the cover showed through the front of the card.
+   Hide whichever face is turned away at the halfway point of the flip. */
+.face,
+.face * {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.cover {
+  transform: rotateY(0deg) translateZ(0.1px);
+  transition: opacity 0s linear 0.35s;
+}
+.front {
+  transform: rotateY(180deg) translateZ(0.1px);
+  opacity: 0;
+  transition: opacity 0s linear 0.35s;
+}
+.flipper.is-open .cover { opacity: 0; }
+.flipper.is-open .front { opacity: 1; }
+
 @media (prefers-reduced-motion: reduce) {
-  .flipper { transition: none; }
+  .flipper,
+  .cover,
+  .front { transition: none; }
 }
