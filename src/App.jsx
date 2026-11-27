@@ -12,6 +12,9 @@ import {
 const COOLDOWN = 10 // seconds before "Next card" unlocks
 const CARDS_PER_GAME = 5
 const LANE_CARDS = [2, 4] // these cards are for the whole lane
+// Person picks that mention strikes or spares are kept off the first card
+// (matched by wording, so it still works if you edit the list in cards.js).
+const notOnFirstCard = (personIndex) => /strike|spare/i.test(PEOPLE[personIndex])
 
 function shuffle(n, avoidFirst) {
   const arr = Array.from({ length: n }, (_, i) => i)
@@ -31,12 +34,23 @@ function createDeck(n) {
   let pos = 0
   let last
   return {
-    draw() {
+    draw(accept) {
       let reshuffled = false
       if (pos >= order.length) {
         order = shuffle(n, last)
         pos = 0
         reshuffled = true
+      }
+      if (accept) {
+        // Bring the next acceptable item forward (reshuffle if none are left).
+        let j = order.findIndex((v, i) => i >= pos && accept(v))
+        if (j === -1) {
+          order = shuffle(n, last)
+          pos = 0
+          reshuffled = true
+          j = order.findIndex(accept)
+        }
+        ;[order[pos], order[j]] = [order[j], order[pos]]
       }
       last = order[pos++]
       return { index: last, reshuffled, position: pos }
@@ -91,7 +105,7 @@ export default function App() {
       setReshuffled(false)
     } else {
       const act = decks.actions.draw()
-      const who = decks.people.draw()
+      const who = decks.people.draw(n === 1 ? (i) => !notOnFirstCard(i) : undefined)
       const action = ACTIONS[act.index]
       const isBowl = action.category === 'bowl'
       const pins = 1 + Math.floor(Math.random() * 9)
