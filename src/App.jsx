@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react'
-import { ACTIONS, CATEGORIES, CONSEQUENCES, PEOPLE } from './cards.js'
+import {
+  ACTIONS,
+  CATEGORIES,
+  CONSEQUENCES,
+  FINALE,
+  LANE_ACTIONS,
+  LANE_PERSON,
+  PEOPLE,
+} from './cards.js'
 
-const COOLDOWN = 5
+const COOLDOWN = 10 // seconds before "Next card" unlocks
+const CARDS_PER_GAME = 5
+const LANE_CARDS = [2, 4] // these cards are for the whole lane
 
 function shuffle(n, avoidFirst) {
   const arr = Array.from({ length: n }, (_, i) => i)
@@ -40,12 +50,13 @@ export default function App() {
     actions: createDeck(ACTIONS.length),
     people: createDeck(PEOPLE.length),
     consequences: createDeck(CONSEQUENCES.length),
+    lane: createDeck(LANE_ACTIONS.length),
   }))
 
   const [card, setCard] = useState(null)
   const [revealed, setRevealed] = useState(false)
   const [seconds, setSeconds] = useState(0)
-  const [seen, setSeen] = useState(0)
+  const [seen, setSeen] = useState(0) // card number within the current game (1-5)
   const [reshuffled, setReshuffled] = useState(false)
 
   // Cooldown starts the moment a card is uncovered.
@@ -57,20 +68,44 @@ export default function App() {
 
   const uncover = () => {
     if (revealed) return
-    const act = decks.actions.draw()
-    const who = decks.people.draw()
-    const action = ACTIONS[act.index]
-    const isBowl = action.category === 'bowl'
-    const pins = 1 + Math.floor(Math.random() * 9)
+    // After the 5th card the next one starts a new game.
+    const n = seen >= CARDS_PER_GAME ? 1 : seen + 1
 
-    setCard({
-      category: action.category,
-      person: PEOPLE[who.index],
-      action: action.text.replace('[n]', pins),
-      consequence: isBowl ? CONSEQUENCES[decks.consequences.draw().index] : null,
-    })
-    setSeen(act.position)
-    setReshuffled(act.reshuffled)
+    if (LANE_CARDS.includes(n)) {
+      const act = decks.lane.draw()
+      setCard({
+        category: 'lane',
+        person: LANE_PERSON,
+        action: LANE_ACTIONS[act.index],
+        consequence: null,
+      })
+      setReshuffled(false)
+    } else if (n === CARDS_PER_GAME) {
+      // Finale: fixed card, doesn't use up a card from the decks.
+      setCard({
+        category: FINALE.category,
+        person: FINALE.person,
+        action: FINALE.text,
+        consequence: null,
+      })
+      setReshuffled(false)
+    } else {
+      const act = decks.actions.draw()
+      const who = decks.people.draw()
+      const action = ACTIONS[act.index]
+      const isBowl = action.category === 'bowl'
+      const pins = 1 + Math.floor(Math.random() * 9)
+
+      setCard({
+        category: action.category,
+        person: PEOPLE[who.index],
+        action: action.text.replace('[n]', pins),
+        consequence: isBowl ? CONSEQUENCES[decks.consequences.draw().index] : null,
+      })
+      setReshuffled(act.reshuffled)
+    }
+
+    setSeen(n)
     setSeconds(COOLDOWN)
     setRevealed(true)
   }
@@ -89,7 +124,7 @@ export default function App() {
       <header className="top">
         <span className="brand">PRYME cards</span>
         <span className="count">
-          {seen === 0 ? `${ACTIONS.length} cards` : `Card ${seen} of ${ACTIONS.length}`}
+          {seen === 0 ? `${CARDS_PER_GAME} cards` : `Card ${seen} of ${CARDS_PER_GAME}`}
         </span>
       </header>
 

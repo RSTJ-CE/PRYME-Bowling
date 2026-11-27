@@ -2,28 +2,47 @@ export const CATEGORIES = {
   know: { label: 'Get to know you', emoji: '🗣️', color: '#14b8a6' },
   team: { label: 'Team interaction', emoji: '🤝', color: '#f59e0b' },
   bowl: { label: 'Bowling challenge', emoji: '🎳', color: '#f43f5e' },
+  lane: { label: 'Whole lane', emoji: '👥', color: '#3b82f6' },
+  finale: { label: 'Finale', emoji: '🏆', color: '#8b5cf6' },
+}
+
+// Cards 2 and 4 of every game: everyone in the lane answers.
+export const LANE_PERSON = 'Everyone in your lane'
+export const LANE_ACTIONS = [
+  'Everyone shares a hobby they do frequently.',
+  'Everyone shares one interesting fact they learnt this month.',
+  "Everyone shares a skill they'd like to learn and why.",
+  'Everyone describes their ideal way to spend a free weekend.',
+  'Everyone shares a place outside of home that they would be willing to stay in.',
+  'Everyone shares the superpower they want the most.',
+  'Everyone shares something new they tried recently and enjoyed.',
+  'Everyone shares a side quest they are currently doing.',
+  'Everyone shares their favourite object/item.',
+  'Everyone shares one thing that makes them happy.',
+]
+
+// The 5th card of every game. Always goes to the person with the highest total score.
+export const FINALE = {
+  category: 'finale',
+  person: 'Person with the highest total score',
+  text: 'Give a short victory speech.',
 }
 
 export const PEOPLE = [
-  'Person with the lowest total score',
+  'Person whose first name comes first alphabetically',
   'Person with the highest total score',
-  'Person with the lowest pin count in the previous round',
+  'Person whose birthday is closest to today',
   'Person with the highest pin count in their previous round',
-  'Person with the second-lowest pin count in the previous round',
+  'Person whose first name comes last alphabetically',
   'Person with the second-highest pin count in the previous round',
   'Person who improved their score the most compared to the previous round',
   'Person who scored the most strikes',
   'Person who scored the most spares',
-  'Person who scored the most gutter balls',
-  'Person who had the lowest single-frame score in the previous round',
+  'Person wearing the brightest colour',
+  'Person sitting closest to the scoreboard',
   'Person who had the highest single-frame score in the previous round',
   'Person who pressed the "Uncover Card" button appoints a person',
   'Person who pressed the "Uncover Card" button',
-  'Person who has been selected the fewest times so far',
-  'The youngest person in the group',
-  'The oldest person in the group',
-  'The tallest person in the group',
-  'The shortest person in the group',
 ]
 
 const a = (category, items) => items.map((text) => ({ category, text }))
@@ -35,7 +54,7 @@ export const ACTIONS = [
     "Tell us about a skill you'd like to learn and why.",
     "Share one achievement you're particularly proud of.",
     'Describe your ideal way to spend a free weekend.',
-    'Share about a place outside of home that you would be willing to stay in.',
+    'Share about a place you want to travel to.',
     'Share about a superpower you want the most.',
     'Share something new you tried recently and enjoyed.',
     'Describe a quality you value most in yourself.',
@@ -54,7 +73,6 @@ export const ACTIONS = [
     'Invite one teammate to share a skill they would enjoy teaching others.',
     'Ask one teammate what they plan to do this month.',
     'Ask one teammate about their favourite movie or show.',
-    'Share an interesting fact you found out about a teammate.',
     "Ask one teammate what they hope to get out of today's activity.",
   ]),
   ...a('bowl', [
@@ -64,8 +82,6 @@ export const ACTIONS = [
     'Try to knock down exactly [n] pins on your next throw.',
     'Strike a pose immediately after releasing your ball.',
     'Throw your next ball using both hands.',
-    'Roll your next ball between your legs using both hands.',
-    'Face away from the pins and roll the ball backwards between your legs.',
     'Try to knock down only one corner pin.',
     'Perform your entire approach, wind-up and release in extreme slow motion.',
     'Try to knock down the same number of pins as the previous player.',
